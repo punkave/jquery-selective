@@ -17,17 +17,17 @@ You also need jquery.ui.autocomplete. jquery.ui.sortable is optional. See [jquer
 The element on which you call $.selective must have the following
 structure (the div is the element itself):
 
-<div class="my-list">
-  <!-- Text entry for autocompleting the next item -->
-  <input data-autocomplete />
-  <!-- The list of existing items added so far -->
-  <ul data-list>
-    <li data-item>
-      <span data-label>Example label</span>
-      <a href="#" data-remove>x</a>
-    </li>
-  </ul>
-</div>
+    <div class="my-list">
+      <!-- Text entry for autocompleting the next item -->
+      <input data-autocomplete />
+      <!-- The list of existing items added so far -->
+      <ul data-list>
+        <li data-item>
+          <span data-label>Example label</span>
+          <a href="#" data-remove>x</a>
+        </li>
+      </ul>
+    </div>
 
 Your markup can be different as long as nested elements with the data
 attributes shown are present.
