@@ -127,9 +127,9 @@ Users making changes to one object, such as a webpage, may sometimes wish to pro
 
 To support this common pattern, `jquery-selective` offers the `propagate` option. If the `propagate` option is true, `jquery-selective` will expect to find a checkbox with the `data-propagate` attribute in the `data-item` template element. The user may check this box to indicate that they wish to propagate that particular choice to other objects. The status of that checkbox will be included in the results as described below. Note that this checkbox appears even for preexisting choices, as a convenient way to propagate that choice at a later time.
 
-** When the `propagate` option is present, the `strikethrough` option is assumed, and the `removed` option to the `get` command is also assumed. ** This allows the user to propagate the removal of a choice as well as the addition of a choice.
+**When the `propagate` option is present, the `strikethrough` option is assumed, and the `removed` option to the `get` command is also assumed.** This allows the user to propagate the removal of a choice as well as the addition of a choice.
 
-** When the `propagate` option is present, a `propagate` property is added to each result returned by `get`. **
+**When the `propagate` option is present, a `propagate` property is added to each result returned by `get`.**
 
 If we configure `selective` like this:
 
