@@ -10,6 +10,11 @@
     body {
       font-family: Helvetica;
     }
+    .test-case {
+      box-shadow:         inset 0 0 10px #000000;
+      margin: 20px;
+      padding: 10px;
+    }
     .test-list .autocomplete
     {
       display: inline-block;
@@ -53,8 +58,8 @@
 <body>
   <h1>jQuery Selective Test</h1>
 
-  <div class="test-case-basic">
-    <h2>Basic</h2>
+  <div class="test-case test-case-basic">
+    <h2>Basic Example</h2>
     <p>Just multiple select autocomplete.</p>
     <div class="test-list">
       <!-- Text entry for autocompleting the next item -->
@@ -77,9 +82,9 @@
     </pre>
   </div>
 
-  <div class="test-case-propagate">
-    <h2>Propagate</h2>
-    <p>Multiple select autocomplete with: drag and drop sorting, no duplicate entries, removed entries shown with strikethrough, and checkboxes for propagation to child objects
+  <div class="test-case test-case-propagate">
+    <h2>Fancy Example</h2>
+    <p>Multiple select autocomplete with drag and drop sorting, no duplicate entries, removed entries shown with strikethrough, and checkboxes for propagation to child objects.
     </p>
     <div class="test-list">
       <!-- Text entry for autocompleting the next item -->
