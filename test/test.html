@@ -1,0 +1,514 @@
+<html>
+<head>
+  <title>jQuery Selective Test Page</title>
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script src="../jquery.selective.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <!-- Suggested CSS, yours may vary -->
+  <style type="text/css">
+    body {
+      font-family: Helvetica;
+    }
+    .test-list .autocomplete
+    {
+      display: inline-block;
+      width: 200px;
+    }
+    .test-list li
+    {
+      padding: 5px;
+      margin: 5px;
+    }
+    .test-list li:hover
+    {
+      background-color: #eee;
+    }
+    .test-list .label-and-remove
+    {
+      display: inline-block;
+      width: 200px;
+    }
+    .test-list a
+    {
+      color: red;
+      text-decoration: none;
+      font-style: italic;
+      padding-right: 40px;
+    }
+    .apos-removed
+    {
+      background-color: #fee;
+    }
+    .test-list li.apos-removed:hover
+    {
+      background-color: #edd;
+    }
+    .apos-removed .label
+    {
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+<body>
+  <h1>jQuery Selective Test</h1>
+
+  <div class="test-case-basic">
+    <h2>Basic</h2>
+    <p>Just multiple select autocomplete.</p>
+    <div class="test-list">
+      <!-- Text entry for autocompleting the next item -->
+      <input data-autocomplete placeholder="Type Here" class="autocomplete" />
+      <!-- The list of existing items added so far -->
+      <ul data-list>
+        <li data-item>
+          <span class="label-and-remove">
+            <span data-label>Example label</span>
+            <!-- Link to remove this choice -->
+            <a href="#" data-remove>x</a>
+          </span>
+        </li>
+      </ul>
+    </div>
+    <p>
+      <button class="save">Save</button>
+    </p>
+    <pre class="results">
+    </pre>
+  </div>
+
+  <div class="test-case-propagate">
+    <h2>Propagate</h2>
+    <p>Multiple select autocomplete with: drag and drop sorting, no duplicate entries, removed entries shown with strikethrough, and checkboxes for propagation to child objects
+    </p>
+    <div class="test-list">
+      <!-- Text entry for autocompleting the next item -->
+      <input data-autocomplete placeholder="Type Here" class="autocomplete" />
+      <!-- The list of existing items added so far -->
+      <ul data-list>
+        <li data-item>
+          <!-- label-and-remove is here for styling -->
+          <span class="label-and-remove">
+            <span class="label" data-label>Example label</span>
+            <!-- Link to remove this choice -->
+            <a href="#" data-remove>x</a>
+          </span>
+          <!-- Optional checkbox for use with the propagate option -->
+          <span class="propagate"><input type="checkbox" data-propagate /> Apply to Subpages</span>
+        </li>
+      </ul>
+    </div>
+    <p>
+      <button class="save">Save</button>
+    </p>
+    <pre class="results">
+    </pre>
+  </div>
+
+  <script type="text/javascript">
+    $(function() {
+      var words = [
+        'executive',
+        'prove',
+        'hang',
+        'entire',
+        'rock',
+        'forget',
+        'claim',
+        'remove',
+        'manager',
+        'enjoy',
+        'network',
+        'legal',
+        'religious',
+        'cold',
+        'final',
+        'main',
+        'science',
+        'green',
+        'memory',
+        'card',
+        'above',
+        'seat',
+        'cell',
+        'establish',
+        'nice',
+        'trial',
+        'expert',
+        'spring',
+        'firm',
+        'Democrat',
+        'radio',
+        'visit',
+        'management',
+        'avoid',
+        'imagine',
+        'tonight',
+        'huge',
+        'ball',
+        'finish',
+        'yourself',
+        'theory',
+        'impact',
+        'respond',
+        'statement',
+        'maintain',
+        'charge',
+        'popular',
+        'traditional',
+        'onto',
+        'reveal',
+        'direction',
+        'weapon',
+        'employee',
+        'cultural',
+        'contain',
+        'peace',
+        'pain',
+        'apply',
+        'measure',
+        'wide',
+        'shake',
+        'fly',
+        'interview',
+        'manage',
+        'chair',
+        'fish',
+        'particular',
+        'camera',
+        'structure',
+        'politics',
+        'perform',
+        'bit',
+        'weight',
+        'suddenly',
+        'discover',
+        'candidate',
+        'production',
+        'treat',
+        'trip',
+        'evening',
+        'affect',
+        'inside',
+        'conference',
+        'unit',
+        'style',
+        'adult',
+        'worry',
+        'range',
+        'mention',
+        'deep',
+        'edge',
+        'specific',
+        'writer',
+        'trouble',
+        'necessary',
+        'throughout',
+        'challenge',
+        'fear',
+        'shoulder',
+        'institution',
+        'middle',
+        'sea',
+        'dream',
+        'bar',
+        'beautiful',
+        'property',
+        'instead',
+        'improve',
+        'stuff',
+        'detail',
+        'method',
+        'somebody',
+        'magazine',
+        'hotel',
+        'soldier',
+        'reflect',
+        'heavy',
+        'sexual',
+        'bag',
+        'heat',
+        'marriage',
+        'tough',
+        'sing',
+        'surface',
+        'purpose',
+        'exist',
+        'pattern',
+        'whom',
+        'skin',
+        'agent',
+        'owner',
+        'machine',
+        'gas',
+        'ahead',
+        'generation',
+        'commercial',
+        'address',
+        'cancer',
+        'item',
+        'reality',
+        'coach',
+        'Mrs',
+        'yard',
+        'beat',
+        'violence',
+        'total',
+        'tend',
+        'investment',
+        'discussion',
+        'finger',
+        'garden',
+        'notice',
+        'collection',
+        'modern',
+        'task',
+        'partner',
+        'positive',
+        'civil',
+        'kitchen',
+        'consumer',
+        'shot',
+        'budget',
+        'wish',
+        'painting',
+        'scientist',
+        'safe',
+        'agreement',
+        'capital',
+        'mouth',
+        'nor',
+        'victim',
+        'newspaper',
+        'threat',
+        'responsibility',
+        'smile',
+        'attorney',
+        'score',
+        'account',
+        'interesting',
+        'audience',
+        'rich',
+        'dinner',
+        'vote',
+        'western',
+        'relate',
+        'travel',
+        'debate',
+        'prevent',
+        'citizen',
+        'majority',
+        'none',
+        'front',
+        'born',
+        'admit',
+        'senior',
+        'assume',
+        'wind',
+        'key',
+        'professional',
+        'mission',
+        'fast',
+        'alone',
+        'customer',
+        'suffer',
+        'speech',
+        'successful',
+        'option',
+        'participant',
+        'southern',
+        'fresh',
+        'eventually',
+        'forest',
+        'video',
+        'global',
+        'Senate',
+        'reform',
+        'access',
+        'restaurant',
+        'judge',
+        'publish',
+        'relation',
+        'release',
+        'bird',
+        'opinion',
+        'credit',
+        'critical',
+        'corner',
+        'concerned',
+        'recall',
+        'version',
+        'stare',
+        'safety',
+        'effective',
+        'neighborhood',
+        'original',
+        'troop',
+        'income',
+        'directly',
+        'hurt',
+        'species',
+        'immediately',
+        'track',
+        'basic',
+        'strike',
+        'sky',
+        'freedom',
+        'absolutely',
+        'plane',
+        'nobody',
+        'achieve',
+        'object',
+        'attitude',
+        'labor',
+        'refer',
+        'concept',
+        'client',
+        'powerful',
+        'perfect',
+        'nine',
+        'therefore',
+        'conduct',
+        'announce',
+        'conversation',
+        'examine',
+        'touch',
+        'please',
+        'attend',
+        'completely',
+        'variety',
+        'sleep',
+        'involved',
+        'investigation',
+        'nuclear',
+        'researcher',
+        'press',
+        'conflict',
+        'spirit',
+        'replace',
+        'British',
+        'encourage',
+        'argument',
+        'camp',
+        'brain',
+        'feature',
+        'afternoon',
+        'AM',
+        'weekend',
+        'dozen',
+        'possibility',
+        'insurance',
+        'department',
+        'battle',
+        'beginning',
+        'date',
+        'generally',
+        'African',
+        'sorry',
+        'crisis',
+        'complete',
+        'fan',
+        'stick',
+        'define',
+        'easily',
+        'hole',
+        'element',
+        'vision',
+        'status',
+        'normal',
+        'Chinese',
+        'ship',
+        'solution',
+        'stone',
+        'slowly',
+        'scale',
+        'university',
+        'introduce',
+        'driver',
+        'attempt',
+        'park'
+      ];
+
+      function test(sel, extras) {
+
+        // Mock version of $.ajax for local testing of callback URLs
+        $.ajax = function(options) {
+          // Make it async & simulate network delay
+          setTimeout(function() {
+            return testSource(options.data, options.success);
+          }, 100);
+        };
+
+        function testSource(request, response) {
+          if (request.term) {
+            var result = [];
+            $.each(words, function(i, word) {
+              if (word.substr(0, request.term.length) === request.term) {
+                result.push({ value: i, label: word });
+              }
+            });
+            return response(result);
+          } else if (request.values) {
+            var result = [];
+            $.each(request.values, function(i, index) {
+              result.push({ value: index, label: words[index] });
+            });
+            return response(result);
+          } else {
+            throw 'Got neither term nor values as property of request';
+          }
+        }
+
+        var sharedOptions = {
+          // This will really go through our mock $.ajax to
+          // the testSource function. You can also pass testSource
+          // directly, local functions are supported
+          source: 'http://example.com/autocomplete',
+          data: [ 10, 20, 30, 40 ]
+        };
+        var options = {};
+        $.extend(true, options, sharedOptions);
+        $.extend(true, options, extras);
+
+        var $el = $(sel);
+        var $list = $el.find('.test-list');
+        $list.selective(options);
+        $el.find('.save').on('click', function() {
+          var data = $list.selective('get');
+          // Cheesy prettyprinter
+          $el.find('.results').text(dump(data));
+        });
+
+        function dump(obj, indent) {
+          if (indent === undefined) {
+            indent = '';
+          }
+          var s = '';
+          if ($.isArray(obj)) {
+            s += indent + "[\n";
+            for (var i = 0; (i < obj.length); i++) {
+              s += dump(obj[i], indent + '  ');
+            }
+            s += indent + "]\n";
+          } else if (typeof(obj) === 'object') {
+            s += indent + "{\n";
+            for (var i in obj) {
+              if (obj.hasOwnProperty(i)) {
+                s += indent + '  ' + i + ': ';
+                s += dump(obj[i], indent + '  ');
+              }
+            }
+            s += indent + "}\n";
+          } else {
+            s += obj.toString() + "\n";
+          }
+          return s;
+        }
+      }
+
+      test('.test-case-basic', {});
+      test('.test-case-propagate', { preventDuplicates: true, propagate: true, sortable: true });
+    });
+  </script>
+</body>
+</html>
