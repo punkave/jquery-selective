@@ -136,7 +136,6 @@
 
       self.set = function(data) {
         self.clear();
-        console.log(data);
 
         if (data && data[0] && (typeof(data[0]) !== 'object')) {
           if (typeof(options.source) === 'function') {
