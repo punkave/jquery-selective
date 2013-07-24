@@ -80,6 +80,9 @@
     </p>
     <pre class="results">
     </pre>
+    <p>
+      <button class="load">Load</button>
+    </p>
   </div>
 
   <div class="test-case test-case-propagate">
@@ -108,6 +111,39 @@
     </p>
     <pre class="results">
     </pre>
+    <p>
+      <button class="load">Load</button>
+    </p>
+  </div>
+
+  <div class="test-case test-case-extras">
+    <h2>Fanciest Example</h2>
+    <p>Multiple select autocomplete with drag and drop sorting, no duplicate entries, removed entries shown with strikethrough, and a "job title" for each selected employee.
+    </p>
+    <div class="test-list">
+      <!-- Text entry for autocompleting the next item -->
+      <input data-autocomplete placeholder="Type Here" class="autocomplete" />
+      <!-- The list of existing items added so far -->
+      <ul data-list>
+        <li data-item>
+          <!-- label-and-remove is here for styling -->
+          <span class="label-and-remove">
+            <span class="label" data-label>Example label</span>
+            <!-- Link to remove this choice -->
+            <a href="#" data-remove>x</a>
+          </span>
+          Job Title <input type="text" name="jobTitle" value="" data-extras />
+        </li>
+      </ul>
+    </div>
+    <p>
+      <button class="save">Save</button>
+    </p>
+    <pre class="results">
+    </pre>
+    <p>
+      <button class="load">Load</button>
+    </p>
   </div>
 
   <script type="text/javascript">
@@ -482,6 +518,21 @@
           var data = $list.selective('get');
           // Cheesy prettyprinter
           $el.find('.results').text(dump(data));
+          $el.find('.results').data('saved', data);
+        });
+        $el.find('.load').on('click', function() {
+          var data = $el.find('.results').data('saved');
+          if (!data) {
+            alert('Save something first.');
+            return;
+          }
+          // Before reloading the data we need to provide
+          // the labels, always the server's job and not something
+          // that we save
+          $.each(data, function(i, datum) {
+            datum.label = words[datum.value];
+          });
+          $list.selective('set', data);
         });
 
         function dump(obj, indent) {
@@ -513,6 +564,7 @@
 
       test('.test-case-basic', {});
       test('.test-case-propagate', { preventDuplicates: true, propagate: true, sortable: true });
+      test('.test-case-extras', { preventDuplicates: true, extras: true, strikethrough: true, sortable: true });
     });
   </script>
 </body>

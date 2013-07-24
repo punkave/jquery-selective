@@ -119,6 +119,33 @@ When the `removed` option is passed to the `get` command, the result consists of
 
 This option is only available if the `strikethrough` option is `true` when configuring `jquery-selective`.
 
+### Extra Fields: the Job Title Example
+
+Let's say you are selecting people as members of a department. That relationship often has an attribute of its own: a job title.
+
+You could have a single job title property attached to people, but in an institution where many people play multiple roles, one per department, that won't cut it.
+
+You can address this with the `extras` option. It's very simple:
+
+1. Set the `extras` option to true.
+2. Provide extra form fields in your `data-item` attribute, like this. Each extra field must have the `data-extras` attribute:
+
+    <li data-item>
+      <span data-label>Example label</span>
+      <a href="#" data-remove>x</a>
+      Job Title <input data-extras name="jobTitle" />
+    </li>
+
+3. When you `get` the value, it will come back as an array of objects. Each object will always have a `value` property, and will also have properties for each of the extra fields.
+
+Boom! That's it.
+
+#### Setting Extras For Existing Values
+
+OK, there is one more detail: how do you initialize the extra fields for existing choices? Easy: in addition to `label` and `value`, include properties for each of the extra fields.
+
+If you are passing just an array of values and relying on `source` to fetch complete objects with labels and values, that's fine. Just make sure your `source` also returns the extra properties.
+
 ### Propagating Changes to Children
 
 <img src="https://raw.github.com/punkave/jquery-selective/master/test/screenshot2.png" align="center" />
@@ -153,6 +180,10 @@ The results of a call to `get` will look like this:
 Ones and zeroes are used as booleans for convenience when POSTing these values over a REST API.
 
 Implementing propagation on the server side is, of course, up to you.
+
+## Changelog
+
+0.1.7: introduced the `extras` option, allowing extra form fields for each selected item to be included.
 
 ## About P'unk Avenue and Apostrophe
 
