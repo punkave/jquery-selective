@@ -89,7 +89,7 @@ For more information about the normal behavior of the `source` option, see the j
 
 By default, you cannot add a new item that was not supplied by autocomplete. In some cases, such as tagging, this is a reasonable thing to do. In such cases, set the `add` option to `true`. Note that this implies the value and the label are the same. This option is suitable only when that is the case.
 
-When this option is enabled, pressing enter will add a new item. If you do not want the enter key, set the addKeyCodes option to a different keycode or array of keycodes. (You may include the value `13` for the enter key.)
+When this option is enabled, pressing enter will add a new item. If you do not want the enter key, set the `addKeyCodes` option to a different keycode or array of keycodes. (You may include the value `13` for the enter key. The comma key is `188`. [Here's a list of cross-browser-safe keycodes.](http://www.javascripter.net/faq/keycodes.htm))
 
 ### Preventing Duplicates
 
