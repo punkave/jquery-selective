@@ -85,6 +85,12 @@ The use of a function as `source` is also supported. In this case the `request` 
 
 For more information about the normal behavior of the `source` option, see the jQuery UI autocomplete documentation.
 
+### Adding New Items Without Autocomplete
+
+By default, you cannot add a new item that was not supplied by autocomplete. In some cases, such as tagging, this is a reasonable thing to do. In such cases, set the `add` option to `true`. Note that this implies the value and the label are the same. This option is suitable only when that is the case.
+
+When this option is enabled, pressing enter will add a new item. If you do not want the enter key, set the addKeyCodes option to a different keycode or array of keycodes. (You may include the value `13` for the enter key.)
+
 ### Preventing Duplicates
 
 If you set the `preventDuplicates` option to `true`, `jquery-selective` will automatically prevent the user from seeing suggestions that duplicate choices already made. This check is made on the `value` property of each suggestion, not the `label` property. Duplicate labels may occur, depending on your data (for instance, users with the same name).

@@ -3,7 +3,7 @@
   "title": "Selective",
   "description": "Selective provides multiple selection with autocomplete: a list to which items may be added by typing part of the label. A server-side or client-side source may be specified for autocomplete (see jquery.ui.autocomplete). Items may be reordered if the sortable option is present (this feature requires jQuery UI sortable). Items may also be removed. There are additional features for advanced cases. It is especially useful when there are too many options to be presented in an ordinary dropdown list.",
   "keywords": ["selective", "select", "multiple", "autocomplete", "typeahead", "relationship", "apostrophe", "punkave"],
-  "version": "0.1.7",
+  "version": "0.1.8",
   "author": {
     "name": "P'unk Avenue",
     "url": "http://punkave.com/"
