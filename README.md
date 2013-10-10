@@ -12,7 +12,7 @@ This plugin is especially useful when there are too many options to be presented
 
 You need jQuery, of course. `jquery-selective` is actively supported with jQuery 1.9 and 2.0 but should work fine with reasonably recent versions. `jquery-selective` is supported in IE7 or better and in recent versions of Firefox, Chrome, Opera and Safari. (We cannot officially support IE6, because Microsoft doesn't, but that probably works too.)
 
-You also need jquery.ui.autocomplete. jquery.ui.sortable is optional. See [jqueryui.com](http://jqueryui.com/) for more information on these widely used plugins, typically downloaded as part of a single build.
+You also need `jquery.ui.autocomplete`. `jquery.ui.sortable` is optional. See [jqueryui.com](http://jqueryui.com/) for more information on these widely used plugins, typically downloaded as part of a single build.
 
 ## How to Use
 
@@ -107,6 +107,14 @@ Call `$('.my-element').selective('get')` to retrieve an array of the current val
 
 Most often the `value` properties are database identifiers. `jquery-selective` is great for managing one-to-many and many-to-many relationships.
 
+### Limiting the Number of Items Chosen
+
+You can set a maximum number of items chosen with the `limit` option.
+
+If you wish to show an indicator when the limit is reached, just provide an element with a `data-limit-indicator` attribute. This element will not appear until the limit is reached.
+
+*Only the user is forbidden to exceed the limit.* If you, as the developer, pass in a `data` option containing existing selections in excess of your `limit` option, the extra items are not automatically removed, although the user can remove them to get below the limit and add new items. This is useful if you have set a new limit and wish to "grandfather in" existing selections that exceed it.
+
 ### Removing Choices With Strikethrough
 
 By default, when the user removes one of their choices made so far, it disappears from that list. If you set the `strikethrough` option to `true`, any options removed are ~~struck through~~ instead. The user can click the `remove` link again to change their mind. Deleted options still are not returned by the `get` command, unless the `removed` option is passed to the `get` command as described below.
@@ -189,6 +197,8 @@ Implementing propagation on the server side is, of course, up to you.
 
 ## Changelog
 
+0.1.11: introduced the `limit` option, allowing the number of selections to be restricted.
+0.1.8, 0.1.9, 0.1.10: documentation and packaging tweaks.
 0.1.7: introduced the `extras` option, allowing extra form fields for each selected item to be included.
 
 ## About P'unk Avenue and Apostrophe

@@ -197,6 +197,62 @@
     </p>
   </div>
 
+  <div class="test-case test-case-limit">
+    <h2>Basic Example With Limit</h2>
+    <p>No more than 3 selections permitted.</p>
+    <div class="test-list">
+      <!-- Text entry for autocompleting the next item -->
+      <input data-autocomplete placeholder="Type Here" class="autocomplete" />
+      <span data-limit-indicator>Maximum Reached</span>
+      <!-- The list of existing items added so far -->
+      <ul data-list>
+        <li data-item>
+          <span class="label-and-remove">
+            <span data-label>Example label</span>
+            <!-- Link to remove this choice -->
+            <a href="#" data-remove>x</a>
+          </span>
+        </li>
+      </ul>
+    </div>
+    <p>
+      <button class="save">Save</button>
+    </p>
+    <pre class="results">
+    </pre>
+    <p>
+      <button class="load">Load</button>
+    </p>
+  </div>
+
+  <div class="test-case test-case-limit-and-strikethrough">
+    <h2>Basic Example With Limit And Strikethrough</h2>
+    <p>No more than 3 selections permitted.</p>
+    <div class="test-list">
+      <!-- Text entry for autocompleting the next item -->
+      <input data-autocomplete placeholder="Type Here" class="autocomplete" />
+      <span data-limit-indicator>Maximum Reached</span>
+      <!-- The list of existing items added so far -->
+      <ul data-list>
+        <li data-item>
+          <span class="label-and-remove">
+            <span data-label>Example label</span>
+            <!-- Link to remove this choice -->
+            <a href="#" data-remove>x</a>
+          </span>
+        </li>
+      </ul>
+    </div>
+    <p>
+      <button class="save">Save</button>
+    </p>
+    <pre class="results">
+    </pre>
+    <p>
+      <button class="load">Load</button>
+    </p>
+  </div>
+
   <script type="text/javascript">
     $(function() {
       var words = [
@@ -619,6 +675,8 @@
       test('.test-case-add', { add: true, addKeyCodes: [ 13, 188 ], preventDuplicates: true });
       test('.test-case-propagate', { preventDuplicates: true, propagate: true, sortable: true });
       test('.test-case-extras', { preventDuplicates: true, extras: true, strikethrough: true, sortable: true });
+      test('.test-case-limit', { preventDuplicates: true, limit: 3 });
+      test('.test-case-limit-and-strikethrough', { preventDuplicates: true, limit: 3, strikethrough: true });
     });
   </script>
 </body>
