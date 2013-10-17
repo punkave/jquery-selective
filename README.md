@@ -197,6 +197,7 @@ Implementing propagation on the server side is, of course, up to you.
 
 ## Changelog
 
+0.1.12: always hide the limit indicator if the limit option is undefined. This is a convenience for those using a single template for many uses of jquery selective.
 0.1.11: introduced the `limit` option, allowing the number of selections to be restricted.
 0.1.8, 0.1.9, 0.1.10: documentation and packaging tweaks.
 0.1.7: introduced the `extras` option, allowing extra form fields for each selected item to be included.
