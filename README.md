@@ -115,6 +115,10 @@ If you wish to show an indicator when the limit is reached, just provide an elem
 
 *Only the user is forbidden to exceed the limit.* If you, as the developer, pass in a `data` option containing existing selections in excess of your `limit` option, the extra items are not automatically removed, although the user can remove them to get below the limit and add new items. This is useful if you have set a new limit and wish to "grandfather in" existing selections that exceed it.
 
+### Events
+
+A `change` event is triggered on the element when the user adds or removes an item. This may be combined with `$element.selective('get')` to update other elements on the fly. `change` events may also bubble up from sub-elements if you are using [extra fields](#extra-fields-the-job-title-example), but this can be a good thing.
+
 ### Removing Choices With Strikethrough
 
 By default, when the user removes one of their choices made so far, it disappears from that list. If you set the `strikethrough` option to `true`, any options removed are ~~struck through~~ instead. The user can click the `remove` link again to change their mind. Deleted options still are not returned by the `get` command, unless the `removed` option is passed to the `get` command as described below.
@@ -197,6 +201,7 @@ Implementing propagation on the server side is, of course, up to you.
 
 ## Changelog
 
+0.1.14: added `change` events.
 0.1.13: politely do nothing if `selective` is invoked on a jQuery object that contains zero elements. This is in line with the behavior of other jQuery plugins and standard functions.
 0.1.12: always hide the limit indicator if the limit option is undefined. This is a convenience for those using a single template for many uses of jquery selective.
 0.1.11: introduced the `limit` option, allowing the number of selections to be restricted.

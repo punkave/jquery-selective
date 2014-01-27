@@ -101,6 +101,8 @@
     <p>
       <button class="save">Save</button>
     </p>
+    <pre class="events">
+    </pre>
     <pre class="results">
     </pre>
     <p>
@@ -129,6 +131,8 @@
     <p>
       <button class="save">Save</button>
     </p>
+    <pre class="events">
+    </pre>
     <pre class="results">
     </pre>
     <p>
@@ -160,6 +164,8 @@
     <p>
       <button class="save">Save</button>
     </p>
+    <pre class="events">
+    </pre>
     <pre class="results">
     </pre>
     <p>
@@ -190,6 +196,8 @@
     <p>
       <button class="save">Save</button>
     </p>
+    <pre class="events">
+    </pre>
     <pre class="results">
     </pre>
     <p>
@@ -218,6 +226,8 @@
     <p>
       <button class="save">Save</button>
     </p>
+    <pre class="events">
+    </pre>
     <pre class="results">
     </pre>
     <p>
@@ -246,6 +256,8 @@
     <p>
       <button class="save">Save</button>
     </p>
+    <pre class="events">
+    </pre>
     <pre class="results">
     </pre>
     <p>
@@ -621,6 +633,11 @@
         var $el = $(sel);
         var $list = $el.find('.test-list');
         $list.selective(options);
+        $list.on('change', function(event) {
+          var $events = $el.find('.events');
+          var text = $events.text();
+          $events.text(text + '\r\n' + 'change event');
+        });
         $el.find('.save').on('click', function() {
           var data = $list.selective('get');
           // Cheesy prettyprinter
