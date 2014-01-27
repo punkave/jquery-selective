@@ -21,6 +21,7 @@ You also need `jquery.ui.autocomplete`. `jquery.ui.sortable` is optional. See [j
 The element on which you call $.selective must have the following
 structure (the div is the element itself):
 
+```html
     <div class="my-list">
       <!-- Text entry for autocompleting the next item -->
       <input data-autocomplete />
@@ -32,6 +33,7 @@ structure (the div is the element itself):
         </li>
       </ul>
     </div>
+```
 
 Your markup can be different as long as nested elements with the data
 attributes shown are present.
@@ -47,7 +49,9 @@ real data. Of course, if you are building a dialog before displaying it, you won
 
 Just write:
 
+```javascript
     $('.my-list').selective({ source: 'http://mysite.com/autocomplete' });
+```
 
 The `source` URL will receive a GET request with a `term` query string parameter containing what the user has typed so far. This URL should respond with a JSON-encoded array in which each object has `value` and `label` properties. The `label` is what is shown in the menu of possible completions, while the `value` is what is actually returned by `get`, described below. The `value` property must be a string or number.
 
@@ -61,10 +65,12 @@ Often the user has already made several choices previously and you need to redis
 
 `data` may be an array in which each element has `label` and `value` properties, as described above. Here is an example:
 
+```javascript
     $('.my-list').selective({
       source: 'http://mysite.com/autocomplete',
       data: [ { label: 'One', value: 1 }, { label: 'Two', value: 2 } ]
     });
+```
 
 #### Passing `data` With Values Only
 
@@ -72,10 +78,12 @@ Often you only have the values (typically database IDs) for previous selections.
 
 If you pass an array containing only the values, like this:
 
+```javascript
     $('.my-list').selective({
       source: 'http://mysite.com/autocomplete',
       data: [ 1, 2 ]
     });
+```
 
 Then `jquery-selective` will make a POST request to `source` with a `values` parameter. The `values` parameter will be an array containing what was passed as the `data` option. This is an extension to the standard behavior of autocomplete's `source` option.
 
@@ -103,9 +111,31 @@ If you set the `sortable` option to `true` and jQuery UI sortable is available, 
 
 Call `$('.my-element').selective('get')` to retrieve an array of the current values. This will be a flat array containing the `value` properties of each selection, for example:
 
+```javascript
     [ 1, 2 ]
+```
 
 Most often the `value` properties are database identifiers. `jquery-selective` is great for managing one-to-many and many-to-many relationships.
+
+### Clearing the Selection
+
+You may clear the selection with the `clear` command:
+
+```javascript
+    $('.my-element').selective('clear');
+```
+
+### Setting the Selection
+
+You may reset the selection with the `set` command:
+
+```javascript
+    $('.my-element').selective('set', [ 4, 7, 19 ]);
+```
+
+Calling `set` works exactly like passing the `data` option. You may pass an array of values, which invokes the source to get the labels, or you may pass an array of objects with `label` and `value` properties.
+
+You may also reset the entire element by re-configuring it with a fresh `selective({ ... })` call.
 
 ### Limiting the Number of Items Chosen
 
@@ -127,6 +157,7 @@ By default, when the user removes one of their choices made so far, it disappear
 
 When the `removed` option is passed to the `get` command, the result consists of an array like this:
 
+```javascript
     $('.my-element').selective('get', { removed: true });
 
     [
@@ -134,6 +165,7 @@ When the `removed` option is passed to the `get` command, the result consists of
       { value: 10, removed: true },
       { value: 20 }
     ]
+```
 
 This option is only available if the `strikethrough` option is `true` when configuring `jquery-selective`.
 
@@ -148,11 +180,13 @@ You can address this with the `extras` option. It's very simple:
 1. Set the `extras` option to true.
 2. Provide extra form fields in your `data-item` attribute, like this. Each extra field must have the `data-extras` attribute:
 
+```html
     <li data-item>
       <span data-label>Example label</span>
       <a href="#" data-remove>x</a>
       Job Title <input data-extras name="jobTitle" />
     </li>
+```
 
 3. When you `get` the value, it will come back as an array of objects. Each object will always have a `value` property, and will also have properties for each of the extra fields.
 
@@ -178,14 +212,17 @@ To support this common pattern, `jquery-selective` offers the `propagate` option
 
 If we configure `selective` like this:
 
+```javascript
     $('.my-element').selective({
       source: 'http://example.com/complete',
       preventDuplicates: true,
       propagate: true
     });
+```
 
 The results of a call to `get` will look like this:
 
+```javascript
     $('.my-element').selective('get');
 
     [
@@ -194,6 +231,7 @@ The results of a call to `get` will look like this:
       { value: 20, propagate: 0 },
       { value: 7, removed: 1, propagate: 1 }
     ]
+```
 
 Ones and zeroes are used as booleans for convenience when POSTing these values over a REST API.
 
@@ -201,6 +239,7 @@ Implementing propagation on the server side is, of course, up to you.
 
 ## Changelog
 
+0.1.15: you can successfully re-initialize the plugin with new settings for a previously configured element. This is the right way to change your jquery selective settings. Also documented the `set` and `clear` commands.
 0.1.14: added `change` events.
 0.1.13: politely do nothing if `selective` is invoked on a jQuery object that contains zero elements. This is in line with the behavior of other jQuery plugins and standard functions.
 0.1.12: always hide the limit indicator if the limit option is undefined. This is a convenience for those using a single template for many uses of jquery selective.
