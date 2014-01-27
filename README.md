@@ -240,11 +240,17 @@ Implementing propagation on the server side is, of course, up to you.
 ## Changelog
 
 0.1.15: you can successfully re-initialize the plugin with new settings for a previously configured element. This is the right way to change your jquery selective settings. Also documented the `set` and `clear` commands.
+
 0.1.14: added `change` events.
+
 0.1.13: politely do nothing if `selective` is invoked on a jQuery object that contains zero elements. This is in line with the behavior of other jQuery plugins and standard functions.
+
 0.1.12: always hide the limit indicator if the limit option is undefined. This is a convenience for those using a single template for many uses of jquery selective.
+
 0.1.11: introduced the `limit` option, allowing the number of selections to be restricted.
+
 0.1.8, 0.1.9, 0.1.10: documentation and packaging tweaks.
+
 0.1.7: introduced the `extras` option, allowing extra form fields for each selected item to be included.
 
 ## About P'unk Avenue and Apostrophe
