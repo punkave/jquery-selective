@@ -117,6 +117,20 @@ Call `$('.my-element').selective('get')` to retrieve an array of the current val
 
 Most often the `value` properties are database identifiers. `jquery-selective` is great for managing one-to-many and many-to-many relationships.
 
+### Retrieving the Result with Labels
+
+Sometimes you will be interested in both the labels and the values. You can obtain them both this way:
+
+```javascript
+$('.my-element').selective('get', { withLabels: true })
+```
+
+And you will get back:
+
+```javascript
+    [ { value: 1, label: 'Bob' }, { value: 2, label: 'Jane' } ]
+```
+
 ### Clearing the Selection
 
 You may clear the selection with the `clear` command:
@@ -238,6 +252,8 @@ Ones and zeroes are used as booleans for convenience when POSTing these values o
 Implementing propagation on the server side is, of course, up to you.
 
 ## Changelog
+
+0.1.16: the `get` method also returns labels when you pass the `{ withLabels: true }` option.
 
 0.1.15: you can successfully re-initialize the plugin with new settings for a previously configured element. This is the right way to change your jquery selective settings. Also documented the `set` and `clear` commands.
 
