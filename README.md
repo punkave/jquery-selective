@@ -99,7 +99,7 @@ By default, you cannot add a new item that was not supplied by autocomplete. In 
 
 When this option is enabled, pressing enter will add a new item. If you do not want the enter key, set the `addKeyCodes` option to a different keycode or key identifier or an array of either. (You may include the key code value `13` for the enter key. The comma key identifier is `U+002C`)
 
-Key codes refer to the physical placement of a key on the keyboard, while key identifiers refer to the character's place in the UTF-8 code table. For instance, the key code for the comma character on a standard US keyboard would be `188`, and its' key identifier is `U+002C`. Generally, it is preferable to use key identifiers, as key codes refer to physical key placements, which are occupied with characters that differe between international keyboard layouts.
+Key codes refer to the physical placement of a key on the keyboard, while key identifiers refer to the character's place in the UTF-8 code table. For instance, the key code for the comma character on a standard US keyboard would be `188`, and its' key identifier is `U+002C`. Generally, it is preferable to use key identifiers, as key codes refer to physical key placements, which are occupied with characters that differ between international keyboard layouts.
 
 - [Here's a list of cross-browser-safe keycodes.](http://www.javascripter.net/faq/keycodes.htm)
 - [Here's a list of key identifiers for basic latin characters](http://codepoints.net/basic_latin)
