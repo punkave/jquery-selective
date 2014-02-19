@@ -253,6 +253,8 @@ Implementing propagation on the server side is, of course, up to you.
 
 ## Changelog
 
+0.1.17: key identifiers accepted as well as keycodes for the `addKeyCodes` option. This is much more i18n friendly. Thanks to Danny Povolotski.
+
 0.1.16: the `get` method also returns labels when you pass the `{ withLabels: true }` option.
 
 0.1.15: you can successfully re-initialize the plugin with new settings for a previously configured element. This is the right way to change your jquery selective settings. Also documented the `set` and `clear` commands.
