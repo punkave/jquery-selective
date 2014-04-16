@@ -76,6 +76,29 @@
     {
       clear: left;
     }
+    .test-case-incomplete li
+    {
+      float: left;
+    }
+    .test-case-incomplete .autocomplete
+    {
+      margin-top: 10px;
+      float: left;
+    }
+    .test-case-incomplete .label-and-remove
+    {
+      display: inline;
+      width: auto;
+    }
+    .test-case-incomplete .test-list a
+    {
+      width: auto;
+      padding-right: 10px;
+    }
+    .test-case-incomplete .clear
+    {
+      clear: left;
+    }
   </style>
 </head>
 <body>
@@ -140,6 +163,35 @@
     </p>
   </div>
 
+  <div class="test-case test-case-incomplete">
+    <h2>Example with Add and Incomplete</h2>
+    <p>You can add values not present in autocomplete results by pressing enter or comma. If you have entered a value but not pressed enter or comma when the save button is clicked, that value is returned too, demonstrating the incomplete option. Styled as a list of tags we're adding to.</p>
+    <div class="test-list">
+      <!-- The list of existing items added so far -->
+      <ul data-list>
+        <li data-item>
+          <span class="label-and-remove">
+            <span data-label>Example label</span>
+            <!-- Link to remove this choice -->
+            <a href="#" data-remove>x</a>
+          </span>
+        </li>
+      </ul>
+      <!-- Text entry for autocompleting the next item -->
+      <input data-autocomplete placeholder="Type Here" class="autocomplete" />
+    </div>
+    <p class="clear">
+    <p>
+      <button class="save">Save</button>
+    </p>
+    <pre class="events">
+    </pre>
+    <pre class="results">
+    </pre>
+    <p>
+      <button class="load">Load</button>
+    </p>
+  </div>
   <div class="test-case test-case-with-labels-and-add">
     <h2>Example with withLabels and Add</h2>
     <p>You can add values not present in autocomplete results by pressing enter or comma. Styled as a list of tags we're adding to.</p>
@@ -669,7 +721,11 @@
           $events.text(text + '\r\n' + 'change event');
         });
         $el.find('.save').on('click', function() {
-          var data = $list.selective('get', { withLabels: options.withLabels });
+          var getOptions = { withLabels: options.withLabels };
+          if (options.get) {
+            $.extend(true, getOptions, options.get);
+          }
+          var data = $list.selective('get', getOptions);
           // Cheesy prettyprinter
           $el.find('.results').text(dump(data));
           $el.find('.results').data('saved', data);
@@ -720,6 +776,7 @@
       // Allow enter or comma.
       // Keycodes you can trust: http://www.javascripter.net/faq/keycodes.htm
       test('.test-case-add', { add: true, addKeyCodes: [ 13, 188 ], preventDuplicates: true });
+      test('.test-case-incomplete', { add: true, addKeyCodes: [ 13, 188 ], preventDuplicates: true, get: { incomplete: true } });
       test('.test-case-with-labels-and-add', { add: true, addKeyCodes: [ 13, 188 ], preventDuplicates: true, withLabels: true });
       test('.test-case-propagate', { preventDuplicates: true, propagate: true, sortable: true });
       test('.test-case-extras', { preventDuplicates: true, extras: true, strikethrough: true, sortable: true });

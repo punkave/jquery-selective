@@ -122,6 +122,16 @@ Call `$('.my-element').selective('get')` to retrieve an array of the current val
 
 Most often the `value` properties are database identifiers. `jquery-selective` is great for managing one-to-many and many-to-many relationships.
 
+### When The User Won't Press Enter: Adding The Incomplete Item
+
+Sometimes, especially with tags, users never get the hang of pressing "enter" to add each new item. In particular, if the user has typed a tag in the text field and then pressed "save" for your entire form without pressing enter, they expect their new tag to be saved. Remembering to press "enter" in this situation is a nuisance.
+
+In these cases, include the `incomplete: true` option when fetching the results with `get`:
+
+```javascript
+$('.my-element').selective('get', { incomplete: true })
+```
+
 ### Retrieving the Result with Labels
 
 Sometimes you will be interested in both the labels and the values. You can obtain them both this way:
@@ -257,6 +267,10 @@ Ones and zeroes are used as booleans for convenience when POSTing these values o
 Implementing propagation on the server side is, of course, up to you.
 
 ## Changelog
+
+1.0.0: introduced the `incomplete` option to the `get` command. This saves users from the hassle of remembering to press "enter" when they are only adding one new item to the list.
+
+Also declared jQuery Selective version 1.0.0 stable, since things have been quiet and happy for a while.
 
 0.1.17: key identifiers accepted as well as keycodes for the `addKeyCodes` option. This is much more i18n friendly. Thanks to Danny Povolotski.
 
