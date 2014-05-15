@@ -93,6 +93,10 @@ The use of a function as `source` is also supported. In this case the `request` 
 
 For more information about the normal behavior of the `source` option, see the jQuery UI autocomplete documentation.
 
+#### Passing `data` With Everything Except Labels
+
+It's also common to have the database ID (the `value` property) and various extra properties but not the `label` property. If your `data` object is an array of objects which are missing their `label` properties, the `source` will be invoked as described above, and the returned labels will be merged with your existing objects.
+
 ### Adding New Items Without Autocomplete
 
 By default, you cannot add a new item that was not supplied by autocomplete. In some cases, such as tagging, this is a reasonable thing to do. In such cases, set the `add` option to `true`. Note that this implies the value and the label are the same. This option is suitable only when that is the case.
@@ -267,6 +271,10 @@ Ones and zeroes are used as booleans for convenience when POSTing these values o
 Implementing propagation on the server side is, of course, up to you.
 
 ## Changelog
+
+1.0.1: when fetching labels for existing values, requests to the source URL are made via a POST request, per the documentation. Previously a GET request was used, contradicting the documentation and running the risk of failure if the number of values exceeds the allowable length of a URL. However if you must have the old behavior you may set the `valuesMethod` option to `GET`.
+
+Also introduced support for fetching missing labels from the source when `data` is an existing array of objects that have other properties but not `label`.
 
 1.0.0: introduced the `incomplete` option to the `get` command. This saves users from the hassle of remembering to press "enter" when they are only adding one new item to the list.
 

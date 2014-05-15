@@ -214,18 +214,59 @@
       self.set = function(data) {
         self.clear();
 
-        if (data && data[0] && (typeof(data[0]) !== 'object')) {
-          if (typeof(options.source) === 'function') {
-            return options.source({ values: data }, appendValues);
-          } else if (typeof(options.source) === 'string') {
-            return $.getJSON(options.source, { values: data }, appendValues);
+        if (data && data[0]) {
+          if (typeof(data[0]) !== 'object') {
+            // A simple array of values, let the source provide labels
+            return invokeSourceThen(data, appendValues);
+          } else if (data[0].label) {
+            // An array of objects that already have labels, we're done
+            return appendValues(data);
           } else {
-            throw "data is not an array of objects, and source is not a URL or a function. Not sure what to do.";
+            // An array of objects that do not already have labels,
+            // ask the source for label/value objects and then merge
+            // those with our data
+            return invokeSourceThen($.map(data, function(datum) { return datum.value; }), function(sourceData) {
+              return appendValues(mergeData(sourceData));
+            });
           }
-        } else {
-          // The simple case: the data is ready to use
-          return appendValues(data);
         }
+
+        function invokeSourceThen(values, callback) {
+          if (typeof(options.source) === 'function') {
+            return options.source({ values: values }, callback);
+          } else if (typeof(options.source) === 'string') {
+            // Do what our documentation says, make a POST request
+            return $.ajax(
+              {
+                url: options.source,
+                type: options.valuesMethod || 'POST',
+                data: {
+                  values: values
+                },
+                dataType: 'json',
+                success: callback
+              }
+            );
+          } else {
+            throw "source must be a url or a function.";
+          }
+        }
+
+        // The source gave us objects with labels and values. Now merge
+        // that with the array of objects passed as "data." If no
+        // label/value object was returned by the source for a
+        // particular value, then we drop that object
+        function mergeData(sourceData) {
+          var map = {};
+          $.each(data, function(i, datum) {
+            map[datum.value] = datum;
+          });
+          $.each(sourceData, function(i, sourceDatum) {
+            $.extend(sourceDatum, map[sourceDatum.value]);
+          });
+          return sourceData;
+        }
+
         function appendValues(data) {
           $.each(data, function(i, datum) {
             self.add(datum);

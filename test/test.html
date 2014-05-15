@@ -736,12 +736,6 @@
             alert('Save something first.');
             return;
           }
-          // Before reloading the data we need to provide
-          // the labels, always the server's job and not something
-          // that we save
-          $.each(data, function(i, datum) {
-            datum.label = words[datum.value];
-          });
           $list.selective('set', data);
         });
 
