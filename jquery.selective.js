@@ -24,6 +24,7 @@
     }
 
     var _new = false;
+    var nextItemId = 1;
 
     // Our properties reside in 'self'. Fetch the old 'self' or
     // set up a new one if this element hasn't been configured
@@ -67,6 +68,8 @@
         self.$list.off('click.selective');
       }
 
+      self.$el = $el;
+      self.baseName = $el.attr('name') || 'jquerySelective';
       self.$list = $el.find('[data-list]');
       self.$autocomplete = $el.find('[data-autocomplete]');
       // Careful, when reconfiguring an existing element this won't be
@@ -180,13 +183,54 @@
           return;
         }
         var $item = self.$itemTemplate.clone();
+        var itemId = nextItemId++;
+        $item.attr('data-id', itemId);
         $item.attr('data-value', item.value);
         // So that the label can be made available to the `get` method easily
         $item.attr('data-label', item.label);
         $item.find('[data-label]').text(item.label);
+        // If extras are present, fix name attributes so radio
+        // button groups on separate rows don't conflict. Stash the
+        // original name in data-name so we can still find things that way
+        $item.find('[data-extras]').each(function() {
+          var $this = $(this);
+          var originalName = $this.attr('name');
+          var name = uniqueName(itemId, originalName);
+          $this.attr('name', name);
+          $this.attr('data-name', originalName);
+        });
         // Also repopulate "extras" if the data is provided
         $.each(item, function(property, value) {
-          $item.find('[data-extras][name="' + property + '"]').val(value);
+          var $elements = $item.find('[data-extras][data-name="' + property + '"]');
+          // More than one with the same name = radio buttons.
+          // If the jquery-radio plugin is available, use it to
+          // correctly select the right radio button
+          if ($.fn.radio && ($elements.length > 1)) {
+            $elements.radio(value);
+            return;
+          }
+          // Cope with checkboxes
+          if ($elements.is('input[type="checkbox"]')) {
+            $elements.prop('checked', !!value);
+            return;
+          }
+          // Everything else
+          $elements.val(value);
+        });
+
+        // Select the first radio button in a group if none is chosen
+        var radioSeen = {};
+        $item.find('input[type="radio"]').each(function() {
+          var $this = $(this);
+          var name = $this.attr('data-name');
+          if (radioSeen[name]) {
+            return;
+          }
+          radioSeen[name] = true;
+          var $group = $item.find('[data-name="' + name + '"]');
+          if ($group.radio() === undefined) {
+            $group.radio($group.eq(0).attr('value'));
+          }
         });
         self.$list.append($item);
       };
@@ -300,7 +344,21 @@
             if (extras) {
               $item.find('[data-extras]').each(function() {
                 var $this = $(this);
-                datum[$this.attr('name')] = $this.val();
+                var result;
+                var seenRadio = {};
+                var name = $this.attr('data-name');
+                if ($this.is('input[type="radio"]') && $.fn.radio) {
+                  if (!seenRadio[name]) {
+                    var $radioButtons = $item.find('[data-name="' + name + '"]');
+                    result = $radioButtons.radio();
+                    seenRadio[name] = true;
+                  }
+                } else if ($this.is('input[type="checkbox"]')) {
+                  result = $this.prop('checked') ? 1 : 0;
+                } else {
+                  result = $this.val();
+                }
+                datum[name] = result;
               });
             }
             result.push(datum);
@@ -339,6 +397,10 @@
       };
 
       self.populate();
+    }
+
+    function uniqueName(itemId, name) {
+      return self.baseName + '[' + itemId + '][' + name + ']';
     }
   };
 })( jQuery );

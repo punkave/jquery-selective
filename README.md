@@ -225,6 +225,12 @@ You can address this with the `extras` option. It's very simple:
 
 Boom! That's it.
 
+#### Checkboxes and Radio Buttons as Extra Fields
+
+Checkboxes are supported. When you `get` them, those properties will be set to either 1 or 0.
+
+Radio buttons are also supported. The first radio button in a group is selected by default.
+
 #### Setting Extras For Existing Values
 
 OK, there is one more detail: how do you initialize the extra fields for existing choices? Easy: in addition to `label` and `value`, include properties for each of the extra fields.
@@ -271,6 +277,8 @@ Ones and zeroes are used as booleans for convenience when POSTing these values o
 Implementing propagation on the server side is, of course, up to you.
 
 ## Changelog
+
+1.0.2: checkboxes and radio buttons are correctly supported when using the "extras" feature. Checkboxes report either 1 or 0, like the `remove` and `propagate` properties. Radio buttons report the value of the selected radio button. The first radio button in a group is selected by default.
 
 1.0.1: when fetching labels for existing values, requests to the source URL are made via a POST request, per the documentation. Previously a GET request was used, contradicting the documentation and running the risk of failure if the number of values exceeds the allowable length of a URL. However if you must have the old behavior you may set the `valuesMethod` option to `GET`.
 

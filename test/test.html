@@ -272,6 +272,8 @@
             <a href="#" data-remove>x</a>
           </span>
           Job Title <input type="text" name="jobTitle" value="" data-extras />
+          Tenured <input type="checkbox" name="tenured" value="" data-extras />
+          Seniority: <input type="radio" name="seniority" value="junior" data-extras /> Junior <input type="radio" name="seniority" value="intermediate" data-extras /> Intermediate <input type="radio" name="seniority" value="Senior" data-extras /> Senior
         </li>
       </ul>
     </div>
@@ -349,6 +351,31 @@
 
   <script type="text/javascript">
     $(function() {
+
+      // This is the jquery radio plugin. You should use the
+      // latest, we've included it here just for the radio button tests.
+      (function( $ ){
+        $.fn.radio = function(value) {
+          var $els = this;
+          if (value === undefined) {
+            return $els.filter(':checked').val();
+          } else {
+            $.each($els, function() {
+              var checked = ($(this).attr('value') === value);
+              // The attribute should be set or unset...
+              if (checked) {
+                this.setAttribute('checked', 'checked');
+              } else {
+                this.removeAttribute('checked');
+              }
+              // And also the property
+              this.checked = checked;
+            });
+          }
+        };
+      })( jQuery );
+
+
       var words = [
         'executive',
         'prove',
@@ -759,6 +786,8 @@
               }
             }
             s += indent + "}\n";
+          } else if (obj === undefined) {
+            s += "undefined\n";
           } else {
             s += obj.toString() + "\n";
           }
