@@ -32,6 +32,7 @@
   "download": "https://github.com/punkave/jquery-selective",
   "dependencies": {
     "jquery": ">=1.9",
-    "jquery.ui.autocomplete": ">=1.9"
+    "jquery.ui.autocomplete": ">=1.9",
+    "jquery.radio": ">=0.1.3"
   }
 }
