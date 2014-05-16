@@ -229,7 +229,7 @@ Boom! That's it.
 
 Checkboxes are supported. When you `get` them, those properties will be set to either 1 or 0.
 
-Radio buttons are also supported. The first radio button in a group is selected by default.
+Radio buttons are also supported, if you have the [jquery radio plugin](http://plugins.jquery.com/radio/) in your project. The first radio button in a group is selected by default.
 
 #### Setting Extras For Existing Values
 
@@ -279,6 +279,8 @@ Implementing propagation on the server side is, of course, up to you.
 ## Changelog
 
 1.0.2: checkboxes and radio buttons are correctly supported when using the "extras" feature. Checkboxes report either 1 or 0, like the `remove` and `propagate` properties. Radio buttons report the value of the selected radio button. The first radio button in a group is selected by default.
+
+Radio button support requires the [jquery-radio](http://plugins.jquery.com/radio/) plugin.
 
 1.0.1: when fetching labels for existing values, requests to the source URL are made via a POST request, per the documentation. Previously a GET request was used, contradicting the documentation and running the risk of failure if the number of values exceeds the allowable length of a URL. However if you must have the old behavior you may set the `valuesMethod` option to `GET`.
 
