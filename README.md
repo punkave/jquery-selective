@@ -306,6 +306,8 @@ Implementing propagation on the server side is, of course, up to you.
 
 ## Changelog
 
+1.1.1: give focus back to text field after the "add" button is clicked.
+
 1.1.0: optional support for "add" buttons when the `add` option is in effect. In addition to the enter key and any other keys specified via `addKeyCodes`, clicking an element with the `data-add` attribute will cause a new item to be added.
 
 There is also an `add` event which can be triggered on the main element.

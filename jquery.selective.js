@@ -111,6 +111,7 @@
         self.$autocomplete.autocomplete('close');
         self.checkLimit();
         $el.trigger('change');
+        self.$autocomplete.focus();
       });
 
       self.$autocomplete.autocomplete({
