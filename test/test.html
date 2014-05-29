@@ -99,6 +99,9 @@
     {
       clear: left;
     }
+    button {
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -134,8 +137,8 @@
   </div>
 
   <div class="test-case test-case-add">
-    <h2>Example with Add</h2>
-    <p>You can add values not present in autocomplete results by pressing enter or comma. Styled as a list of tags we're adding to.</p>
+    <h2>Example with Add Option and Add Button</h2>
+    <p>You can add values not present in autocomplete results by pressing enter or comma. Styled as a list of tags we're adding to. An optional "add" button is also provided to avoid user confusion (in our UX tests this does seem to be important).</p>
     <div class="test-list">
       <!-- The list of existing items added so far -->
       <ul data-list>
@@ -148,7 +151,7 @@
         </li>
       </ul>
       <!-- Text entry for autocompleting the next item -->
-      <input data-autocomplete placeholder="Type Here" class="autocomplete" />
+      <input data-autocomplete placeholder="Type Here" class="autocomplete" /> <button class="add" data-add>Add</button>
     </div>
     <p class="clear">
     <p>

@@ -108,6 +108,34 @@ Key codes refer to the physical placement of a key on the keyboard, while key id
 - [Here's a list of cross-browser-safe keycodes.](http://www.javascripter.net/faq/keycodes.htm)
 - [Here's a list of key identifiers for basic latin characters](http://codepoints.net/basic_latin)
 
+### Supplying an "Add" Button
+
+Worried that users won't understand they should press enter? You also have the option of supplying an "add" button. Any click on an element with the `data-add` attribute will immediately add what the user is currently typing, as long as the `add` option is in effect.
+
+Consider this template:
+
+```html
+    <div class="my-list">
+      <!-- Text entry for autocompleting the next item -->
+      <input data-autocomplete /> <button data-add>Add</button>
+      <!-- The list of existing items added so far -->
+      <ul data-list>
+        <li data-item>
+          <span data-label>Example label</span>
+          <a href="#" data-remove>x</a>
+        </li>
+      </ul>
+    </div>
+```
+
+There is also an `add` event which can be triggered on your list element to immediately add the user's work in progress as a new item.
+
+### Allowing Empty Items
+
+By default, the user cannot add an empty item.
+
+If you wish to allow it, set the `empty` option to `true`.
+
 ### Preventing Duplicates
 
 If you set the `preventDuplicates` option to `true`, `jquery-selective` will automatically prevent the user from seeing suggestions that duplicate choices already made. This check is made on the `value` property of each suggestion, not the `label` property. Duplicate labels may occur, depending on your data (for instance, users with the same name).
@@ -277,6 +305,12 @@ Ones and zeroes are used as booleans for convenience when POSTing these values o
 Implementing propagation on the server side is, of course, up to you.
 
 ## Changelog
+
+1.1.0: optional support for "add" buttons when the `add` option is in effect. In addition to the enter key and any other keys specified via `addKeyCodes`, clicking an element with the `data-add` attribute will cause a new item to be added.
+
+There is also an `add` event which can be triggered on the main element.
+
+Also, adding of empty items is blocked unless you explicitly request it with `empty: true`.
 
 1.0.2: checkboxes and radio buttons are correctly supported when using the "extras" feature. Checkboxes report either 1 or 0, like the `remove` and `propagate` properties. Radio buttons report the value of the selected radio button. The first radio button in a group is selected by default.
 
