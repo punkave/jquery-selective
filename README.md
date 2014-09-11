@@ -10,7 +10,7 @@ This plugin is especially useful when there are too many options to be presented
 
 ## Requirements
 
-You need jQuery, of course. `jquery-selective` is actively supported with jQuery 1.9 and 2.0 but should work fine with reasonably recent versions. `jquery-selective` is supported in IE7 or better and in recent versions of Firefox, Chrome, Opera and Safari. (We cannot officially support IE6, because Microsoft doesn't, but that probably works too.)
+You need jQuery, of course. `jquery-selective` is actively supported with modern versions of jQuery but should work fine with all reasonably recent versions. `jquery-selective` is supported in IE7 or better and in recent versions of Firefox, Chrome, Opera and Safari. (We cannot officially support IE6, because Microsoft doesn't, but that probably works too.)
 
 You also need `jquery.ui.autocomplete`. `jquery.ui.sortable` is optional. See [jqueryui.com](http://jqueryui.com/) for more information on these widely used plugins, typically downloaded as part of a single build.
 
@@ -210,6 +210,17 @@ If you wish to show an indicator when the limit is reached, just provide an elem
 
 A `change` event is triggered on the element when the user adds or removes an item. This may be combined with `$element.selective('get')` to update other elements on the fly. `change` events may also bubble up from sub-elements if you are using [extra fields](#extra-fields-the-job-title-example), but this can be a good thing.
 
+An `afterSet` event is triggered on the element in two situations:
+
+1. When initialization is complete.
+2. When you use the "set" command (see "Setting the Selection").
+
+This event is not triggered until it is safe to use the "get" command. In particular, if the data provided includes only values and not labels, the source will be successfully invoked to merge labels into the data before this event is triggered.
+
+You can also pass an `afterSet` callback function as part of your options object. This function receives no arguments.
+
+Both the event and the callback are guaranteed not be invoked until "next tick." That is, your call to the "set" command or to initialize the element will always return first.
+
 ### Removing Choices With Strikethrough
 
 By default, when the user removes one of their choices made so far, it disappears from that list. If you set the `strikethrough` option to `true`, any options removed are ~~struck through~~ instead. The user can click the `remove` link again to change their mind. Deleted options still are not returned by the `get` command, unless the `removed` option is passed to the `get` command as described below.
@@ -305,6 +316,8 @@ Ones and zeroes are used as booleans for convenience when POSTing these values o
 Implementing propagation on the server side is, of course, up to you.
 
 ## Changelog
+
+1.2.0: trigger an "afterSet" event on the element after the "set" command succeeds or the element is first initialized. This is useful to avoid race conditions because it is never triggered until the source has responded with labels, if needed. An "afterSet" callback may also be provided via the options object.
 
 1.1.1: give focus back to text field after the "add" button is clicked.
 
