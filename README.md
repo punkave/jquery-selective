@@ -317,6 +317,7 @@ Implementing propagation on the server side is, of course, up to you.
 
 ## Changelog
 
+1.2.1: if the "add" option is not set, then calling "get" with the "incomplete" flag should not return the user's input unless it matches a value received from the source. This matches the behavior of manually selecting a choice from the autocomplete list. Both this check and the check for duplicate values are performed case-insensitively. However, what the user actually typed is returned.
 1.2.0: trigger an "afterSet" event on the element after the "set" command succeeds or the element is first initialized. This is useful to avoid race conditions because it is never triggered until the source has responded with labels, if needed. An "afterSet" callback may also be provided via the options object.
 
 1.1.1: give focus back to text field after the "add" button is clicked.
