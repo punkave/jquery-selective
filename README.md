@@ -341,6 +341,8 @@ Implementing propagation on the server side is, of course, up to you.
 
 ## Changelog
 
+1.2.3: fixed a defect that broke the "incomplete" option to "get".
+
 1.2.2: added "afterGetItem" and "afterAddItem" events which allow you to implement additional relationship field types. Also added the "nestGuard" option which allows you to prevent jQuery Selective from "touching" any nested elements found within a certain selector. Together these features enable the use of nested jQuery Selective controls.
 
 1.2.1: if the "add" option is not set, then calling "get" with the "incomplete" flag should not return the user's input unless it matches a value received from the source. This matches the behavior of manually selecting a choice from the autocomplete list. Both this check and the check for duplicate values are performed case-insensitively. However, what the user actually typed is returned.
