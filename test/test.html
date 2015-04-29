@@ -352,6 +352,35 @@
     </p>
   </div>
 
+  <div class="test-case test-case-alpha-sort-demo">
+    <h2>Alpha Sort Demo</h2>
+    <p>Alpha sort, achieved via an insertItemAt event handler.</p>
+    <div class="test-list">
+      <!-- Text entry for autocompleting the next item -->
+      <input data-autocomplete placeholder="Type Here" class="autocomplete" />
+      <!-- The list of existing items added so far -->
+      <ul data-list>
+        <li data-item>
+          <span class="label-and-remove">
+            <span data-label>Example label</span>
+            <!-- Link to remove this choice -->
+            <a href="#" data-remove>x</a>
+          </span>
+        </li>
+      </ul>
+    </div>
+    <p>
+      <button class="save">Save</button>
+    </p>
+    <pre class="events">
+    </pre>
+    <pre class="results">
+    </pre>
+    <p>
+      <button class="load">Load</button>
+    </p>
+  </div>
+
   <script type="text/javascript">
     $(function() {
 
@@ -740,11 +769,30 @@
         };
         var options = {};
         $.extend(true, options, sharedOptions);
+
+        var alphaSortDemo = extras.alphaSortDemo;
+        delete extras.alphaSortDemo;
+
         $.extend(true, options, extras);
 
         var $el = $(sel);
         var $list = $el.find('.test-list');
         $list.selective(options);
+
+        if (alphaSortDemo) {
+          $list.on('insertItemAt', function(event, items, newItem) {
+            var i;
+            for (i = 0; (i < items.length); i++) {
+              if (newItem.label.toLowerCase() < items[i].label.toLowerCase()) {
+                // the new item should appear directly
+                // before this item
+                return i;
+              }
+            }
+            return items.length;
+          });
+        }
+
         $list.on('change', function(event) {
           var $events = $el.find('.events');
           var text = $events.text();
@@ -808,6 +856,7 @@
       test('.test-case-extras', { preventDuplicates: true, extras: true, strikethrough: true, sortable: true });
       test('.test-case-limit', { preventDuplicates: true, limit: 3 });
       test('.test-case-limit-and-strikethrough', { preventDuplicates: true, limit: 3, strikethrough: true });
+      test('.test-case-alpha-sort-demo', { preventDuplicates: true, alphaSortDemo: true });
     });
   </script>
 </body>

@@ -144,6 +144,32 @@ If you set the `preventDuplicates` option to `true`, `jquery-selective` will aut
 
 If you set the `sortable` option to `true` and jQuery UI sortable is available, `jquery-selective` will allow the user to drag and drop the choices they have made into a different order, and the `get` command will respect that order. If you set the `sortable` option to an object, that object is used to configure jQuery UI sortable.
 
+### Changing the Default Sort Order
+
+By default, items appear in the order they are added (each new item is added at the end). This behavior can be changed by responding to the `insertItemAt` event. The `insertItemAt` event receives a list of existing items and a new item, and returns the index where the new item should be inserted.
+
+For instance, to force the labels to appear in alphabetical order:
+
+```javascript
+$('.my-list').selective({
+  source: 'http://mysite.com/autocomplete'
+});
+
+$('.my-list').on('insertItemAt', function(event, items, newItem) {
+  var i;
+  for (i = 0; (i < items.length); i++) {
+    if (newItem.label.toLowerCase() < items[i].label.toLowerCase()) {
+      // the new item should appear directly
+      // before this item
+      return i;
+    }
+  }
+  return items.length;
+});
+```
+
+This feature may not be combined with the `sortable` feature.
+
 ### Retrieving the Result
 
 Call `$('.my-element').selective('get')` to retrieve an array of the current values. This will be a flat array containing the `value` properties of each selection, for example:
@@ -245,6 +271,8 @@ You can use this event to retrieve custom data from your custom fields in `$item
 
 Together `afterAddItem` and `afterGetItem` allow you to go beyond the small set of field types supported out of the box by the `extras` option.
 
+An `insertItemAt` event is emitted to decide where a newly added item should appear in the list. See "Changing the Default Sort Order."
+
 ### Removing Choices With Strikethrough
 
 By default, when the user removes one of their choices made so far, it disappears from that list. If you set the `strikethrough` option to `true`, any options removed are ~~struck through~~ instead. The user can click the `remove` link again to change their mind. Deleted options still are not returned by the `get` command, unless the `removed` option is passed to the `get` command as described below.
@@ -340,6 +368,8 @@ Ones and zeroes are used as booleans for convenience when POSTing these values o
 Implementing propagation on the server side is, of course, up to you.
 
 ## Changelog
+
+1.2.4: added the `insertItemAt` event, which allows you to change the position at which newly selected items are added. For instance, you can implement alphabetical sort, or sort on a property specific to your application.
 
 1.2.3: fixed a defect that broke the "incomplete" option to "get".
 
